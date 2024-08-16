@@ -59,4 +59,11 @@ public class Node<T extends Comparable<T>> {
     public void setParent(Node<T> parent) {
         this.parent = parent;
     }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "data=" + data +
+                '}';
+    }
 }
