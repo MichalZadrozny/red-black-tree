@@ -8,16 +8,9 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
 
     private Node<T> root;
 
-    private final boolean allowDuplicates;
 
     public RedBlackTree() {
         this.root = NilNode.getInstance();
-        this.allowDuplicates = true;
-    }
-
-    public RedBlackTree(boolean allowDuplicates) {
-        this.root = NilNode.getInstance();
-        this.allowDuplicates = allowDuplicates;
     }
 
     @Override
@@ -25,7 +18,7 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
         return root;
     }
 
-//    O(log n)
+    //    O(log n)
     @Override
     public Node<T> searchNode(T key) {
         Node<T> node = root;
@@ -44,7 +37,7 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
         return null;
     }
 
-//    O(log n)
+    //    O(log n)
     @Override
     public void insertNode(T data) {
 
@@ -60,11 +53,7 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
             } else if (newNode.getData().compareTo(current.getData()) > 0) {
                 current = current.getRight();
             } else {
-                if (!allowDuplicates) {
-                    throw new IllegalArgumentException("Tree already contains a node with value: " + data);
-                }
-
-                current = current.getLeft();
+                throw new IllegalArgumentException("Tree already contains a node with value: " + data);
             }
         }
 

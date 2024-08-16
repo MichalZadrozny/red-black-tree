@@ -121,19 +121,7 @@ public class RedBlackTreeTest {
     }
 
     @Test
-    void should_throw_when_addingDuplicate_given_treeNotAllowDuplicates() {
-//        given
-        RedBlackTree<Integer> tree = new RedBlackTree<>(false);
-
-//        when
-        tree.insertNode(5);
-
-//        then
-        assertThrows(IllegalArgumentException.class, () -> tree.insertNode(5));
-    }
-
-    @Test
-    void should_notThrow_when_addingDuplicate_given_treeNotAllowDuplicates() {
+    void should_throwIllegalArgumentException_when_addingDuplicate() {
 //        given
         RedBlackTree<Integer> tree = new RedBlackTree<>();
 
@@ -141,7 +129,7 @@ public class RedBlackTreeTest {
         tree.insertNode(5);
 
 //        then
-        assertDoesNotThrow(() -> tree.insertNode(5));
+        assertThrows(IllegalArgumentException.class, () -> tree.insertNode(5));
     }
 
     @Test
