@@ -25,12 +25,26 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
         return root;
     }
 
+//    O(log n)
     @Override
     public Node<T> searchNode(T key) {
+        Node<T> node = root;
+
+        while (node != null && node.getData() != null) {
+
+            if (key.compareTo(node.getData()) == 0) {
+                return node;
+            } else if (key.compareTo(node.getData()) < 0) {
+                node = node.getLeft();
+            } else {
+                node = node.getRight();
+            }
+        }
+
         return null;
     }
 
-    //    O(log n)
+//    O(log n)
     @Override
     public void insertNode(T data) {
 
