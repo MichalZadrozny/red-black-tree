@@ -143,4 +143,39 @@ public class RedBlackTreeTest {
 //        then
         assertDoesNotThrow(() -> tree.insertNode(5));
     }
+
+    @Test
+    void should_returnNode_when_valueIsInTheTree() {
+//        given
+        RedBlackTree<Integer> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode(5);
+        tree.insertNode(1);
+        tree.insertNode(24);
+        tree.insertNode(-5);
+        tree.insertNode(85);
+        tree.insertNode(32);
+
+//        then
+        assertEquals(Integer.valueOf(-5), tree.searchNode(-5).getData());
+    }
+
+    @Test
+    void should_returnNull_when_valueIsNotInTheTree() {
+//        given
+        RedBlackTree<Integer> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode(5);
+        tree.insertNode(1);
+        tree.insertNode(24);
+        tree.insertNode(-5);
+        tree.insertNode(85);
+        tree.insertNode(32);
+
+//        then
+        assertNull(tree.searchNode(-50));
+    }
+
 }
