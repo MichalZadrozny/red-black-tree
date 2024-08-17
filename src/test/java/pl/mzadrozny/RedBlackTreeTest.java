@@ -304,4 +304,76 @@ public class RedBlackTreeTest {
         assertEquals(24, tree.getRoot().getLeft().getRight().getData());
         assertEquals(85, tree.getRoot().getRight().getData());
     }
+
+    @Test
+    void should_return0_when_checkingSize_given_emptyTree() {
+//        given
+        RedBlackTree<Integer> tree = new RedBlackTree<>();
+
+//        when
+//        then
+        assertEquals(Integer.valueOf(0), tree.size());
+    }
+
+    @Test
+    void should_return1_when_checkingSize_given_treeWithOneElement() {
+//        given
+        RedBlackTree<Integer> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode(5);
+
+//        then
+        assertEquals(Integer.valueOf(1), tree.size());
+    }
+
+    @Test
+    void should_return5_when_checkingSize_given_treeWithFiveElement() {
+//        given
+        RedBlackTree<Integer> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode(5);
+        tree.insertNode(-39);
+        tree.insertNode(30);
+        tree.insertNode(12);
+        tree.insertNode(1);
+
+//        then
+        assertEquals(Integer.valueOf(5), tree.size());
+    }
+
+    @Test
+    void should_return4_when_checkingSizeAfterDeletingOneElement_given_treeWithFiveElement() {
+//        given
+        RedBlackTree<Integer> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode(5);
+        tree.insertNode(-39);
+        tree.insertNode(30);
+        tree.insertNode(12);
+        tree.insertNode(1);
+        tree.deleteNode(5);
+
+//        then
+        assertEquals(Integer.valueOf(4), tree.size());
+    }
+
+    @Test
+    void should_return5_when_checkingSizeAfterDeletingOneElementNotPresentInTree_given_treeWithFiveElement() {
+//        given
+        RedBlackTree<Integer> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode(5);
+        tree.insertNode(-39);
+        tree.insertNode(30);
+        tree.insertNode(12);
+        tree.insertNode(1);
+        tree.deleteNode(99);
+
+//        then
+        assertEquals(Integer.valueOf(5), tree.size());
+    }
 }

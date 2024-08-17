@@ -8,14 +8,22 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
 
     private Node<T> root;
 
+    private int size;
 
     public RedBlackTree() {
         this.root = NilNode.getInstance();
+        this.size = 0;
     }
 
     @Override
     public Node<T> getRoot() {
         return root;
+    }
+
+    //    O(1)
+    @Override
+    public int size() {
+        return this.size;
     }
 
     //    O(log n)
@@ -68,6 +76,8 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
         }
 
         insertFixup(newNode);
+
+        this.size++;
     }
 
     private void insertFixup(Node<T> node) {
@@ -162,6 +172,8 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
         if (deletedNodeColor == BLACK) {
             deleteFixup(nodeToDeleteChild);
         }
+
+        this.size--;
     }
 
     private Node<T> minimum(Node<T> node) {
