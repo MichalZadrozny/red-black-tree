@@ -166,4 +166,142 @@ public class RedBlackTreeTest {
         assertNull(tree.searchNode(-50));
     }
 
+    @Test
+    void should_deleteRoot_when_thereIsOnlyRoot() {
+//        given
+        RedBlackTree<Integer> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode(5);
+        tree.deleteNode(5);
+//        then
+        assertEquals(NilNode.getInstance(), tree.getRoot());
+    }
+
+    @Test
+    void should_deleteRoot_when_thereIsNotOnlyRoot() {
+//        given
+        RedBlackTree<Integer> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode(5);
+        tree.insertNode(-2);
+        tree.insertNode(9);
+        tree.deleteNode(5);
+
+//        then
+        assertEquals(9, tree.getRoot().getData());
+        assertEquals(-2, tree.getRoot().getLeft().getData());
+        assertEquals(NilNode.getInstance(), tree.getRoot().getRight());
+    }
+
+    @Test
+    void should_deleteLeftLeaf() {
+//        given
+        RedBlackTree<Integer> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode(5);
+        tree.insertNode(1);
+        tree.insertNode(24);
+        tree.insertNode(-5);
+        tree.insertNode(85);
+        tree.insertNode(32);
+        tree.deleteNode(-5);
+
+//        then
+        assertEquals(5, tree.getRoot().getData());
+        assertEquals(1, tree.getRoot().getLeft().getData());
+        assertEquals(NilNode.getInstance(), tree.getRoot().getLeft().getLeft());
+        assertEquals(32, tree.getRoot().getRight().getData());
+        assertEquals(24, tree.getRoot().getRight().getLeft().getData());
+        assertEquals(85, tree.getRoot().getRight().getRight().getData());
+    }
+
+    @Test
+    void should_deleteRightLeaf() {
+//        given
+        RedBlackTree<Integer> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode(5);
+        tree.insertNode(1);
+        tree.insertNode(24);
+        tree.insertNode(-5);
+        tree.insertNode(85);
+        tree.insertNode(32);
+        tree.deleteNode(85);
+
+//        then
+        assertEquals(5, tree.getRoot().getData());
+        assertEquals(1, tree.getRoot().getLeft().getData());
+        assertEquals(-5, tree.getRoot().getLeft().getLeft().getData());
+        assertEquals(32, tree.getRoot().getRight().getData());
+        assertEquals(24, tree.getRoot().getRight().getLeft().getData());
+        assertEquals(NilNode.getInstance(), tree.getRoot().getRight().getRight());
+    }
+
+    @Test
+    void should_deleteNode_when_rightChildIsNil() {
+//        given
+        RedBlackTree<Integer> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode(5);
+        tree.insertNode(1);
+        tree.insertNode(24);
+        tree.insertNode(-5);
+        tree.insertNode(85);
+        tree.insertNode(32);
+        tree.deleteNode(1);
+
+//        then
+        assertEquals(5, tree.getRoot().getData());
+        assertEquals(-5, tree.getRoot().getLeft().getData());
+        assertEquals(32, tree.getRoot().getRight().getData());
+        assertEquals(24, tree.getRoot().getRight().getLeft().getData());
+        assertEquals(85, tree.getRoot().getRight().getRight().getData());
+    }
+
+    @Test
+    void should_deleteNode_when_leftChildIsNil() {
+//        given
+        RedBlackTree<Integer> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode(5);
+        tree.insertNode(-5);
+        tree.insertNode(24);
+        tree.insertNode(4);
+        tree.insertNode(85);
+        tree.insertNode(32);
+        tree.deleteNode(24);
+        tree.deleteNode(32);
+
+//        then
+        assertEquals(5, tree.getRoot().getData());
+        assertEquals(-5, tree.getRoot().getLeft().getData());
+        assertEquals(4, tree.getRoot().getLeft().getRight().getData());
+        assertEquals(85, tree.getRoot().getRight().getData());
+    }
+
+    @Test
+    void should_deleteNode_when_bothChildrenAreNil() {
+//        given
+        RedBlackTree<Integer> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode(5);
+        tree.insertNode(-5);
+        tree.insertNode(24);
+        tree.insertNode(85);
+        tree.insertNode(32);
+        tree.deleteNode(-5);
+
+//        then
+        assertEquals(32, tree.getRoot().getData());
+        assertEquals(5, tree.getRoot().getLeft().getData());
+        assertEquals(24, tree.getRoot().getLeft().getRight().getData());
+        assertEquals(85, tree.getRoot().getRight().getData());
+    }
 }

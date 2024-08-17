@@ -120,10 +120,140 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
         root.setColor(BLACK);
     }
 
-
+    // O(log n)
     @Override
     public void deleteNode(T key) {
 
+        Node<T> nodeToDelete = searchNode(key);
+
+        if (nodeToDelete == null) {
+            return;
+        }
+
+        Node<T> y = nodeToDelete;
+        Node<T> nodeToDeleteChild;
+        boolean deletedNodeColor = y.getColor();
+
+        if (nodeToDelete.getLeft() == NilNode.getInstance()) {
+            nodeToDeleteChild = nodeToDelete.getRight();
+            transplant(nodeToDelete, nodeToDelete.getRight());
+        } else if (nodeToDelete.getRight() == NilNode.getInstance()) {
+            nodeToDeleteChild = nodeToDelete.getLeft();
+            transplant(nodeToDelete, nodeToDelete.getLeft());
+        } else {
+            y = minimum(nodeToDelete.getRight());
+            deletedNodeColor = y.getColor();
+            nodeToDeleteChild = y.getRight();
+
+            if (y.getParent() == nodeToDelete) {
+                nodeToDeleteChild.setParent(y);
+            } else {
+                transplant(y, y.getRight());
+                y.setRight(nodeToDelete.getRight());
+                y.getRight().setParent(y);
+            }
+
+            transplant(nodeToDelete, y);
+            y.setLeft(nodeToDelete.getLeft());
+            y.getLeft().setParent(y);
+            y.setColor(nodeToDelete.getColor());
+        }
+
+        if (deletedNodeColor == BLACK) {
+            deleteFixup(nodeToDeleteChild);
+        }
+    }
+
+    private Node<T> minimum(Node<T> node) {
+        while (node.getLeft() != NilNode.getInstance()) {
+            node = node.getLeft();
+        }
+
+        return node;
+    }
+
+    private void transplant(Node<T> nodeToDelete, Node<T> nodeToMove) {
+        if (nodeToDelete.getParent() == null) {
+            root = nodeToMove;
+        } else if (nodeToDelete == nodeToDelete.getParent().getLeft()) {
+            nodeToDelete.getParent().setLeft(nodeToMove);
+        } else {
+            nodeToDelete.getParent().setRight(nodeToMove);
+        }
+
+        nodeToMove.setParent(nodeToDelete.getParent());
+    }
+
+    private void deleteFixup(Node<T> child) {
+        while (child != root && child.getColor() == BLACK) {
+            if (child == child.getParent().getLeft()) {
+                Node<T> w = child.getParent().getRight();
+
+//                Type 1
+                if (w.getColor() == RED) {
+                    w.setColor(BLACK);
+                    child.getParent().setColor(RED);
+                    rotateLeft(child.getParent());
+                    w = child.getParent().getRight();
+                }
+
+//                Type 2
+                if (w.getLeft().getColor() == BLACK && w.getRight().getColor() == BLACK) {
+                    w.setColor(RED);
+                    child = child.getParent();
+                } else {
+
+//                    Type 3
+                    if (w.getRight().getColor() == BLACK) {
+                        w.getLeft().setColor(BLACK);
+                        w.setColor(RED);
+                        rotateRight(w);
+                        w = child.getParent().getRight();
+                    }
+
+//                    Type 4
+                    w.setColor(child.getParent().getColor());
+                    child.getParent().setColor(BLACK);
+                    w.getRight().setColor(BLACK);
+                    rotateLeft(child.getParent());
+                    child = root;
+                }
+            } else {
+                Node<T> w = child.getParent().getLeft();
+
+//                Type 1
+                if (w.getColor() == RED) {
+                    w.setColor(BLACK);
+                    child.getParent().setColor(RED);
+                    rotateRight(child.getParent());
+                    w = child.getParent().getLeft();
+                }
+
+//                Type 2
+                if (w.getRight().getColor() == BLACK && w.getLeft().getColor() == BLACK) {
+                    w.setColor(RED);
+                    child = child.getParent();
+                } else {
+
+//                    Type 3
+                    if (w.getLeft().getColor() == BLACK) {
+                        w.getRight().setColor(BLACK);
+                        w.setColor(RED);
+                        rotateLeft(w);
+                        w = child.getParent().getLeft();
+                    }
+
+//                    Type 4
+                    w.setColor(child.getParent().getColor());
+                    child.getParent().setColor(BLACK);
+                    w.getLeft().setColor(BLACK);
+                    rotateRight(child.getParent());
+                    child = root;
+                }
+            }
+
+            child.setColor(BLACK);
+        }
     }
 
     private void rotateRight(Node<T> node) {
