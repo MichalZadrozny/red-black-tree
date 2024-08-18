@@ -16,8 +16,11 @@ public class Node<T extends Comparable<T>> {
         this.color = RED;
 
         this.parent = null;
-        this.left = NilNode.getInstance();
-        this.right = NilNode.getInstance();
+        this.left = new NilNode<>();
+        this.right = new NilNode<>();
+    }
+
+    public Node() {
     }
 
     public T getData() {

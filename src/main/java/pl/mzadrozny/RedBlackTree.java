@@ -11,7 +11,7 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
     private int size;
 
     public RedBlackTree() {
-        this.root = NilNode.getInstance();
+        this.root = new NilNode<>();
         this.size = 0;
     }
 
@@ -53,7 +53,7 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
         Node<T> parent = null;
         Node<T> current = root;
 
-        while (current != NilNode.getInstance()) {
+        while (current.getClass() != NilNode.class) {
             parent = current;
 
             if (newNode.getData().compareTo(current.getData()) < 0) {
@@ -144,10 +144,10 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
         Node<T> nodeToDeleteChild;
         boolean deletedNodeColor = y.getColor();
 
-        if (nodeToDelete.getLeft() == NilNode.getInstance()) {
+        if (nodeToDelete.getLeft().getClass() == NilNode.class) {
             nodeToDeleteChild = nodeToDelete.getRight();
             transplant(nodeToDelete, nodeToDelete.getRight());
-        } else if (nodeToDelete.getRight() == NilNode.getInstance()) {
+        } else if (nodeToDelete.getRight().getClass() == NilNode.class) {
             nodeToDeleteChild = nodeToDelete.getLeft();
             transplant(nodeToDelete, nodeToDelete.getLeft());
         } else {
@@ -177,7 +177,7 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
     }
 
     private Node<T> minimum(Node<T> node) {
-        while (node.getLeft() != NilNode.getInstance()) {
+        while (node.getLeft().getClass() != NilNode.class) {
             node = node.getLeft();
         }
 

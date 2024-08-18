@@ -175,7 +175,7 @@ public class RedBlackTreeTest {
         tree.insertNode(5);
         tree.deleteNode(5);
 //        then
-        assertEquals(NilNode.getInstance(), tree.getRoot());
+        assertEquals(NilNode.class, tree.getRoot().getClass());
     }
 
     @Test
@@ -192,7 +192,7 @@ public class RedBlackTreeTest {
 //        then
         assertEquals(9, tree.getRoot().getData());
         assertEquals(-2, tree.getRoot().getLeft().getData());
-        assertEquals(NilNode.getInstance(), tree.getRoot().getRight());
+        assertEquals(NilNode.class, tree.getRoot().getRight().getClass());
     }
 
     @Test
@@ -212,7 +212,7 @@ public class RedBlackTreeTest {
 //        then
         assertEquals(5, tree.getRoot().getData());
         assertEquals(1, tree.getRoot().getLeft().getData());
-        assertEquals(NilNode.getInstance(), tree.getRoot().getLeft().getLeft());
+        assertEquals(NilNode.class, tree.getRoot().getLeft().getLeft().getClass());
         assertEquals(32, tree.getRoot().getRight().getData());
         assertEquals(24, tree.getRoot().getRight().getLeft().getData());
         assertEquals(85, tree.getRoot().getRight().getRight().getData());
@@ -238,7 +238,7 @@ public class RedBlackTreeTest {
         assertEquals(-5, tree.getRoot().getLeft().getLeft().getData());
         assertEquals(32, tree.getRoot().getRight().getData());
         assertEquals(24, tree.getRoot().getRight().getLeft().getData());
-        assertEquals(NilNode.getInstance(), tree.getRoot().getRight().getRight());
+        assertEquals(NilNode.class, tree.getRoot().getRight().getRight().getClass());
     }
 
     @Test
