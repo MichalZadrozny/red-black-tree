@@ -1,10 +1,20 @@
 package pl.mzadrozny;
 
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RedBlackTreeTest {
+
+    private static final int TEST_TREE_MIN_SIZE = 1;
+    private static final int TEST_TREE_MAX_SIZE = 10;
 
     @Test
     void should_addAsRoot_when_addingFirstElement() {
@@ -375,5 +385,33 @@ public class RedBlackTreeTest {
 
 //        then
         assertEquals(Integer.valueOf(5), tree.size());
+    }
+
+    @RepeatedTest(100)
+    void should_returnSize0_when_deletingAllElements_given_treeWithRandomElements() {
+        List<Integer> keysOrdered = createOrderedSequenceOfKeys();
+        List<Integer> keysShuffled = shuffle(keysOrdered);
+        RedBlackTree<Integer> tree = new RedBlackTree<>();
+
+        for (Integer key : keysShuffled) {
+            tree.insertNode(key);
+        }
+
+        for (Integer key : keysOrdered) {
+            tree.deleteNode(key);
+        }
+
+        assertEquals(0, tree.size());
+    }
+
+    private List<Integer> createOrderedSequenceOfKeys() {
+        int size = ThreadLocalRandom.current().nextInt(TEST_TREE_MIN_SIZE, TEST_TREE_MAX_SIZE);
+        return IntStream.range(0, size).boxed().toList();
+    }
+
+    private List<Integer> shuffle(List<Integer> keysOrdered) {
+        List<Integer> keys = new ArrayList<>(keysOrdered);
+        Collections.shuffle(keys);
+        return Collections.unmodifiableList(keys);
     }
 }
