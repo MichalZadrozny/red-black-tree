@@ -404,6 +404,64 @@ public class RedBlackTreeTest {
         assertEquals(0, tree.size());
     }
 
+    @Test
+    void should_addToTheLeft_when_addingSmallerElement_given_stringValue() {
+//        given
+        RedBlackTree<String> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode("g");
+        tree.insertNode("a");
+
+//        then
+        assertEquals("a", tree.getRoot().getLeft().getData());
+    }
+
+    @Test
+    void should_addToTheRight_when_addingBiggerElement_given_stringValue() {
+//        given
+        RedBlackTree<String> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode("c");
+        tree.insertNode("t");
+
+//        then
+        assertEquals("t", tree.getRoot().getRight().getData());
+    }
+
+    @Test
+    void should_fixTree_when_addingSecondSmallerElement_given_stringValue() {
+//        given
+        RedBlackTree<String> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode("t");
+        tree.insertNode("f");
+        tree.insertNode("a");
+
+//        then
+        assertEquals("f", tree.getRoot().getData());
+        assertEquals("a", tree.getRoot().getLeft().getData());
+        assertEquals("t", tree.getRoot().getRight().getData());
+    }
+
+    @Test
+    void should_fixTree_when_addingSecondBiggerElement_given_stringValue() {
+//        given
+        RedBlackTree<String> tree = new RedBlackTree<>();
+
+//        when
+        tree.insertNode("d");
+        tree.insertNode("faes");
+        tree.insertNode("p");
+
+//        then
+        assertEquals("faes", tree.getRoot().getData());
+        assertEquals("d", tree.getRoot().getLeft().getData());
+        assertEquals("p", tree.getRoot().getRight().getData());
+    }
+
     private List<Integer> createOrderedSequenceOfKeys() {
         int size = ThreadLocalRandom.current().nextInt(TEST_TREE_MIN_SIZE, TEST_TREE_MAX_SIZE);
         return IntStream.range(0, size).boxed().toList();
