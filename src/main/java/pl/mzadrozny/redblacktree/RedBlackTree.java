@@ -1,8 +1,5 @@
-package pl.mzadrozny;
+package pl.mzadrozny.redblacktree;
 
-
-import static pl.mzadrozny.Node.BLACK;
-import static pl.mzadrozny.Node.RED;
 
 public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T> {
 
@@ -82,15 +79,15 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
 
     private void insertFixup(Node<T> node) {
 
-        while (node.getParent() != null && node.getParent().getColor() == RED) {
+        while (node.getParent() != null && node.getParent().getColor() == Node.RED) {
 
             if (node.getParent() == node.getParent().getParent().getLeft()) {
                 Node<T> current = node.getParent().getParent().getRight();
 
-                if (current.getColor() == RED) {
-                    node.getParent().setColor(BLACK);
-                    current.setColor(BLACK);
-                    node.getParent().getParent().setColor(RED);
+                if (current.getColor() == Node.RED) {
+                    node.getParent().setColor(Node.BLACK);
+                    current.setColor(Node.BLACK);
+                    node.getParent().getParent().setColor(Node.RED);
                     node = node.getParent().getParent();
                 } else {
                     if (node == node.getParent().getRight()) {
@@ -98,17 +95,17 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
                         rotateLeft(node);
                     }
 
-                    node.getParent().setColor(BLACK);
-                    node.getParent().getParent().setColor(RED);
+                    node.getParent().setColor(Node.BLACK);
+                    node.getParent().getParent().setColor(Node.RED);
                     rotateRight(node.getParent().getParent());
                 }
             } else {
                 Node<T> current = node.getParent().getParent().getLeft();
 
-                if (current.getColor() == RED) {
-                    node.getParent().setColor(BLACK);
-                    current.setColor(BLACK);
-                    node.getParent().getParent().setColor(RED);
+                if (current.getColor() == Node.RED) {
+                    node.getParent().setColor(Node.BLACK);
+                    current.setColor(Node.BLACK);
+                    node.getParent().getParent().setColor(Node.RED);
                     node = node.getParent().getParent();
                 } else {
                     if (node == node.getParent().getLeft()) {
@@ -116,8 +113,8 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
                         rotateRight(node);
                     }
 
-                    node.getParent().setColor(BLACK);
-                    node.getParent().getParent().setColor(RED);
+                    node.getParent().setColor(Node.BLACK);
+                    node.getParent().getParent().setColor(Node.RED);
                     rotateLeft(node.getParent().getParent());
                 }
             }
@@ -127,7 +124,7 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
             }
         }
 
-        root.setColor(BLACK);
+        root.setColor(Node.BLACK);
     }
 
     // O(log n)
@@ -169,7 +166,7 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
             y.setColor(nodeToDelete.getColor());
         }
 
-        if (deletedNodeColor == BLACK) {
+        if (deletedNodeColor == Node.BLACK) {
             deleteFixup(nodeToDeleteChild);
         }
 
@@ -197,36 +194,36 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
     }
 
     private void deleteFixup(Node<T> child) {
-        while (child != root && child.getColor() == BLACK) {
+        while (child != root && child.getColor() == Node.BLACK) {
             if (child == child.getParent().getLeft()) {
                 Node<T> w = child.getParent().getRight();
 
 //                Type 1
-                if (w.getColor() == RED) {
-                    w.setColor(BLACK);
-                    child.getParent().setColor(RED);
+                if (w.getColor() == Node.RED) {
+                    w.setColor(Node.BLACK);
+                    child.getParent().setColor(Node.RED);
                     rotateLeft(child.getParent());
                     w = child.getParent().getRight();
                 }
 
 //                Type 2
-                if (w.getLeft().getColor() == BLACK && w.getRight().getColor() == BLACK) {
-                    w.setColor(RED);
+                if (w.getLeft().getColor() == Node.BLACK && w.getRight().getColor() == Node.BLACK) {
+                    w.setColor(Node.RED);
                     child = child.getParent();
                 } else {
 
 //                    Type 3
-                    if (w.getRight().getColor() == BLACK) {
-                        w.getLeft().setColor(BLACK);
-                        w.setColor(RED);
+                    if (w.getRight().getColor() == Node.BLACK) {
+                        w.getLeft().setColor(Node.BLACK);
+                        w.setColor(Node.RED);
                         rotateRight(w);
                         w = child.getParent().getRight();
                     }
 
 //                    Type 4
                     w.setColor(child.getParent().getColor());
-                    child.getParent().setColor(BLACK);
-                    w.getRight().setColor(BLACK);
+                    child.getParent().setColor(Node.BLACK);
+                    w.getRight().setColor(Node.BLACK);
                     rotateLeft(child.getParent());
                     child = root;
                 }
@@ -234,37 +231,37 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
                 Node<T> w = child.getParent().getLeft();
 
 //                Type 1
-                if (w.getColor() == RED) {
-                    w.setColor(BLACK);
-                    child.getParent().setColor(RED);
+                if (w.getColor() == Node.RED) {
+                    w.setColor(Node.BLACK);
+                    child.getParent().setColor(Node.RED);
                     rotateRight(child.getParent());
                     w = child.getParent().getLeft();
                 }
 
 //                Type 2
-                if (w.getRight().getColor() == BLACK && w.getLeft().getColor() == BLACK) {
-                    w.setColor(RED);
+                if (w.getRight().getColor() == Node.BLACK && w.getLeft().getColor() == Node.BLACK) {
+                    w.setColor(Node.RED);
                     child = child.getParent();
                 } else {
 
 //                    Type 3
-                    if (w.getLeft().getColor() == BLACK) {
-                        w.getRight().setColor(BLACK);
-                        w.setColor(RED);
+                    if (w.getLeft().getColor() == Node.BLACK) {
+                        w.getRight().setColor(Node.BLACK);
+                        w.setColor(Node.RED);
                         rotateLeft(w);
                         w = child.getParent().getLeft();
                     }
 
 //                    Type 4
                     w.setColor(child.getParent().getColor());
-                    child.getParent().setColor(BLACK);
-                    w.getLeft().setColor(BLACK);
+                    child.getParent().setColor(Node.BLACK);
+                    w.getLeft().setColor(Node.BLACK);
                     rotateRight(child.getParent());
                     child = root;
                 }
             }
 
-            child.setColor(BLACK);
+            child.setColor(Node.BLACK);
         }
     }
 

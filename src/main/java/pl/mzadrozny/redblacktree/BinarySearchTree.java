@@ -1,4 +1,4 @@
-package pl.mzadrozny;
+package pl.mzadrozny.redblacktree;
 
 public interface BinarySearchTree<T extends Comparable<T>> {
 

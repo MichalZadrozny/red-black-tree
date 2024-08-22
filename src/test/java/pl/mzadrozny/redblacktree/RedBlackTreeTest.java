@@ -1,4 +1,4 @@
-package pl.mzadrozny;
+package pl.mzadrozny.redblacktree;
 
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;

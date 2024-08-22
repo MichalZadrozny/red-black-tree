@@ -1,4 +1,4 @@
-package pl.mzadrozny;
+package pl.mzadrozny.redblacktree;
 
 public class Node<T extends Comparable<T>> {
     private T data;
