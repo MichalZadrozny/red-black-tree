@@ -11,4 +11,6 @@ public interface BinarySearchTree<T extends Comparable<T>> {
     void insertNode(T key);
 
     void deleteNode(T key);
+
+    void deleteNode(Node<T> node);
 }

@@ -129,9 +129,7 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
 
     // O(log n)
     @Override
-    public void deleteNode(T key) {
-
-        Node<T> nodeToDelete = searchNode(key);
+    public void deleteNode(Node<T> nodeToDelete) {
 
         if (nodeToDelete == null) {
             return;
@@ -171,6 +169,12 @@ public class RedBlackTree<T extends Comparable<T>> implements BinarySearchTree<T
         }
 
         this.size--;
+    }
+
+    // O(log n)
+    @Override
+    public void deleteNode(T key) {
+        deleteNode(searchNode(key));
     }
 
     private Node<T> minimum(Node<T> node) {
